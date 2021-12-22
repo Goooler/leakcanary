@@ -93,6 +93,9 @@ subprojects {
   apply plugin: 'io.gitlab.arturbosch.detekt'
 
   pluginManager.withPlugin("com.vanniktech.maven.publish") {
+    mavenPublish {
+      sonatypeHost = "S01"
+    }
     apply plugin: 'org.jetbrains.dokka'
     tasks.named("dokkaGfm", DokkaTask.class) {
       outputDirectory = rootProject.file("docs/api")
