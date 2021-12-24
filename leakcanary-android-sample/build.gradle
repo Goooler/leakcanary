@@ -3,7 +3,7 @@ plugins {
   id("org.jetbrains.kotlin.android")
   // Required to run obfuscated instrumentation tests:
   // ./gradlew leakcanary-android-sample:connectedCheck -Pminify
-  id("com.slack.keeper") version "0.10.0"
+  alias(libs.plugins.keeper)
 }
 
 keeper {
@@ -18,16 +18,16 @@ dependencies {
   // Optional
   releaseImplementation project(':leakcanary-object-watcher-android')
 
-  implementation deps.kotlin.stdlib
+  implementation libs.kotlin.stdlib
 
-  testImplementation deps.junit
-  testImplementation deps.robolectric
+  testImplementation libs.junit
+  testImplementation libs.robolectric
 
   androidTestImplementation project(':leakcanary-android-instrumentation')
-  androidTestImplementation deps.androidx.test.espresso
-  androidTestImplementation deps.androidx.test.rules
-  androidTestImplementation deps.androidx.test.runner
-  androidTestUtil deps.androidx.test.orchestrator
+  androidTestImplementation libs.androidX.test.espresso
+  androidTestImplementation libs.androidX.test.rules
+  androidTestImplementation libs.androidX.test.runner
+  androidTestUtil libs.androidX.test.orchestrator
 }
 
 android {
