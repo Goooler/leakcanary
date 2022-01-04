@@ -13,7 +13,7 @@ android {
   }
   buildFeatures.buildConfig = false
 
-  lintOptions {
+  lint {
     disable("GoogleAppIndexingWarning")
     checkOnly("Interoperability")
   }

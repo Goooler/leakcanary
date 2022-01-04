@@ -13,7 +13,7 @@ android {
     consumerProguardFiles("consumer-proguard-rules.pro")
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
-  lintOptions {
+  lint {
     disable("GoogleAppIndexingWarning")
     error("ObsoleteSdkInt")
     checkOnly("Interoperability")

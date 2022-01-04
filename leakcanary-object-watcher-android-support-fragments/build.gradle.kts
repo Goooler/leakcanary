@@ -11,7 +11,7 @@ android {
     consumerProguardFiles("consumer-proguard-rules.pro")
   }
   buildFeatures.buildConfig = false
-  lintOptions {
+  lint {
     disable("GoogleAppIndexingWarning")
     error("ObsoleteSdkInt")
     checkOnly("Interoperability")

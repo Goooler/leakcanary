@@ -27,7 +27,7 @@ android {
 
     // Run ./gradlew leakcanary-android-sample:connectedCheck -Porchestrator
     if (project.hasProperty("orchestrator")) {
-      testInstrumentationRunnerArguments(mapOf("clearPackageData" to "true"))
+      testInstrumentationRunnerArguments += mapOf("clearPackageData" to "true")
       testOptions {
         execution = "ANDROIDX_TEST_ORCHESTRATOR"
       }
@@ -41,20 +41,16 @@ android {
 
   buildTypes {
     // Build with ./gradlew leakcanary-android-sample:installDebug -Pminify
-    getByName("debug") {
+    debug {
       isMinifyEnabled = project.hasProperty("minify")
       proguardFiles("proguard-android-optimize.txt")
     }
-    getByName("release") {
+    release {
       signingConfig = signingConfigs["debug"]
     }
   }
 
-  dexOptions {
-    dexInProcess = false
-  }
-
-  lintOptions {
+  lint {
     disable("GoogleAppIndexingWarning")
   }
 

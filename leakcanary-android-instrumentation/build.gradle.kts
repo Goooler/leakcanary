@@ -12,7 +12,7 @@ android {
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
   buildFeatures.buildConfig = false
-  lintOptions {
+  lint {
     disable("GoogleAppIndexingWarning")
     // junit references java.lang.management
     ignore("InvalidPackage")

@@ -11,7 +11,7 @@ android {
     minSdk = property("minSdk").toString().toInt()
   }
   buildFeatures.buildConfig = false
-  lintOptions {
+  lint {
     disable("GoogleAppIndexingWarning")
     error("ObsoleteSdkInt")
     checkOnly("Interoperability")

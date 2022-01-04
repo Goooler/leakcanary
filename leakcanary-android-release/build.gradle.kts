@@ -12,7 +12,7 @@ android {
     buildConfigField("String", "LIBRARY_VERSION", "\"${property("VERSION_NAME")}\"")
     consumerProguardFiles("consumer-proguard-rules.pro")
   }
-  lintOptions {
+  lint {
     disable("GoogleAppIndexingWarning")
     error("ObsoleteSdkInt")
     checkOnly("Interoperability")

@@ -12,7 +12,7 @@ android {
     consumerProguardFiles("consumer-proguard-rules.pro")
   }
 
-  lintOptions {
+  lint {
     disable("GoogleAppIndexingWarning")
     checkOnly("Interoperability")
   }
