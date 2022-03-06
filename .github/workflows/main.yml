@@ -9,7 +9,7 @@ jobs:
   validation:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: gradle/wrapper-validation-action@v1
 
   checks:
@@ -17,10 +17,10 @@ jobs:
     steps:
 
       - name: Project Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup JDK 1.8
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3
         with:
           java-version: 8
           distribution: 'zulu'
@@ -57,7 +57,7 @@ jobs:
           script: echo "Generated AVD snapshot for caching."
 
       - name: Espresso Checks
-        uses: reactivecircus/android-emulator-runner@v2.14.3
+        uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 16
           script: ./gradlew leakcanary-android-core:connectedCheck leakcanary-android:connectedCheck leakcanary-android-instrumentation:connectedCheck --stacktrace
@@ -69,10 +69,10 @@ jobs:
     steps:
 
       - name: Project Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup JDK 1.8
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3
         with:
           java-version: 8
           distribution: 'zulu'
