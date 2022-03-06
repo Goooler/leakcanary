@@ -26,10 +26,17 @@ jobs:
           distribution: 'zulu'
 
       - name: Build project
-        run: ./gradlew build --stacktrace
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: build --stacktrace
 
       - name: Assemble Test APK
-        run: ./gradlew assembleAndroidTest --stacktrace
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: assembleAndroidTest --stacktrace
+
+      - name: Gradle cache
+        uses: gradle/gradle-build-action@v2
 
       - name: Espresso Checks
         uses: reactivecircus/android-emulator-runner@v2.14.3
@@ -39,7 +46,7 @@ jobs:
 
   snapshot-deployment:
     if: github.repository == 'square/leakcanary' && github.event_name == 'push'
-    needs: [checks]
+    needs: [ checks ]
     runs-on: ubuntu-latest
     steps:
 
@@ -53,7 +60,9 @@ jobs:
           distribution: 'zulu'
 
       - name: Deploy snapshot
-        run: ./gradlew publish
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: publish
         env:
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.SONATYPE_NEXUS_USERNAME }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SONATYPE_NEXUS_PASSWORD }}
