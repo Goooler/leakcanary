@@ -81,6 +81,12 @@ jobs:
           target: ${{ matrix.target }}
           arch: ${{ matrix.arch }}
           script: ./gradlew leakcanary-android-core:connectedCheck leakcanary-android:connectedCheck leakcanary-android-instrumentation:connectedCheck --stacktrace
+      - name: Upload results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.api-level }}-${{ matrix.arch }}-instrumentation-test-results
+          path: ./**/build/reports/androidTests/connected/**
 
   snapshot-deployment:
     if: github.repository == 'square/leakcanary' && github.event_name == 'push'
