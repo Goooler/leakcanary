@@ -15,16 +15,16 @@
  */
 package shark
 
+import java.lang.ref.PhantomReference
+import java.lang.ref.SoftReference
+import java.lang.ref.WeakReference
+import java.util.EnumSet
 import shark.AndroidReferenceMatchers.Companion.appDefaults
 import shark.AndroidReferenceMatchers.Companion.buildKnownReferences
 import shark.ReferencePattern.InstanceFieldPattern
 import shark.ReferencePattern.JavaLocalPattern
 import shark.ReferencePattern.NativeGlobalVariablePattern
 import shark.ReferencePattern.StaticFieldPattern
-import java.lang.ref.PhantomReference
-import java.lang.ref.SoftReference
-import java.lang.ref.WeakReference
-import java.util.EnumSet
 
 /**
  * [AndroidReferenceMatchers] values add [ReferenceMatcher] instances to a global list via their
@@ -208,7 +208,7 @@ enum class AndroidReferenceMatchers {
       references += instanceFieldLeak(
         "android.view.inputmethod.InputMethodManager", "mServedView", description
       ) {
-        sdkInt in 15..27
+        sdkInt in 15..28
       }
 
       references += instanceFieldLeak(
@@ -684,7 +684,7 @@ enum class AndroidReferenceMatchers {
 
   APPLICATION_PACKAGE_MANAGER__HAS_SYSTEM_FEATURE_QUERY {
     override fun add(references: MutableList<ReferenceMatcher>) {
-      references  += instanceFieldLeak(
+      references += instanceFieldLeak(
         "android.app.ApplicationPackageManager\$HasSystemFeatureQuery", "this\$0",
         description = """
           In Android 11 DP 2 ApplicationPackageManager.HasSystemFeatureQuery was an inner class.
@@ -700,7 +700,7 @@ enum class AndroidReferenceMatchers {
 
   COMPANION_DEVICE_SERVICE__STUB {
     override fun add(references: MutableList<ReferenceMatcher>) {
-      references  += instanceFieldLeak(
+      references += instanceFieldLeak(
         "android.companion.CompanionDeviceService\$Stub", "this\$0",
         description = """
           Android 12 added android.companion.CompanionDeviceService, a bounded service extended by
@@ -712,6 +712,24 @@ enum class AndroidReferenceMatchers {
         """.trimIndent()
       ) {
         sdkInt == 31
+      }
+    }
+  },
+
+  PLAYER_BASE {
+    override fun add(
+      references: MutableList<ReferenceMatcher>
+    ) {
+      references += nativeGlobalVariableLeak(
+        "android.media.PlayerBase\$1",
+        description = """
+          PlayerBase$1 implements IAppOpsCallback as an inner class and is held by a native
+          ref, preventing subclasses of PlayerBase to be GC'd.
+          Introduced in API 24: https://cs.android.com/android/_/android/platform/frameworks/base/+/3c86a343dfca1b9e2e28c240dc894f60709e392c
+          Fixed in API 28: https://cs.android.com/android/_/android/platform/frameworks/base/+/aee6ee94675d56e71a42d52b16b8d8e5fa6ea3ff
+        """.trimIndent()
+      ) {
+        sdkInt in 24..27
       }
     }
   },
@@ -860,9 +878,9 @@ enum class AndroidReferenceMatchers {
       references += staticFieldLeak(
         "android.widget.TextView", "mLastHoveredView",
         description =
-        "mLastHoveredView is a static field in TextView that leaks the last hovered" + " view."
+        "mLastHoveredView is a static field in TextView that leaks the last hovered view."
       ) {
-        manufacturer == SAMSUNG && sdkInt in 19..29
+        manufacturer == SAMSUNG && sdkInt in 19..31
       }
     }
   },
@@ -1210,7 +1228,9 @@ enum class AndroidReferenceMatchers {
       // Holds on to the resumed activity (which is never destroyed), so this will not cause leaks
       // but may surface on the path when a resumed activity holds on to destroyed objects.
       // Would have a path that doesn't include LeakCanary instead.
-      references += ignoredInstanceField("leakcanary.internal.InternalLeakCanary", "resumedActivity")
+      references += ignoredInstanceField(
+        "leakcanary.internal.InternalLeakCanary", "resumedActivity"
+      )
     }
   },
 
