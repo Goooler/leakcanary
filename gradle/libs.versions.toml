@@ -20,6 +20,7 @@ coroutines = "1.7.3"
 androidXTest = "1.5.0"
 androidXJunit = "1.1.5"
 workManager = "2.8.1"
+composeCompiler = "1.5.3"
 
 [libraries]
 gradlePlugin-android = { module = "com.android.tools.build:gradle", version = "8.0.0" }
@@ -36,6 +37,8 @@ coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", ve
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 
+# This isn't strictly used, but allows Renovate to see us using the Compose Compiler artifact
+compose-compiler = { module = "androidx.compose.compiler:compiler", version.ref = "composeCompiler" }
 # We don't need the latest version of AndroidX (there are no bugs that impact what LeakCanary
 # relies on), we're sticking a bit older because most apps will be using a more recent version
 # and they'll automatically resolve to higher version without having to necessarily resort to a
