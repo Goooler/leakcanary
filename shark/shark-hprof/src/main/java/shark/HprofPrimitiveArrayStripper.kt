@@ -1,7 +1,6 @@
 package shark
 
 import okio.BufferedSink
-import okio.Okio
 import shark.HprofRecord.HeapDumpEndRecord
 import shark.HprofRecord.HeapDumpRecord.ObjectRecord.PrimitiveArrayDumpRecord.BooleanArrayDump
 import shark.HprofRecord.HeapDumpRecord.ObjectRecord.PrimitiveArrayDumpRecord.ByteArrayDump
@@ -13,6 +12,8 @@ import shark.HprofRecord.HeapDumpRecord.ObjectRecord.PrimitiveArrayDumpRecord.Lo
 import shark.HprofRecord.HeapDumpRecord.ObjectRecord.PrimitiveArrayDumpRecord.ShortArrayDump
 import shark.StreamingRecordReaderAdapter.Companion.asStreamingRecordReader
 import java.io.File
+import okio.buffer
+import okio.sink
 
 /**
  * Converts a Hprof file to another file with all primitive arrays replaced with arrays of zeroes,
@@ -38,7 +39,7 @@ class HprofPrimitiveArrayStripper {
   ): File {
     stripPrimitiveArrays(
       hprofSourceProvider = FileSourceProvider(inputHprofFile),
-      hprofSink = Okio.buffer(Okio.sink(outputHprofFile.outputStream()))
+      hprofSink = outputHprofFile.outputStream().sink().buffer()
     )
     return outputHprofFile
   }

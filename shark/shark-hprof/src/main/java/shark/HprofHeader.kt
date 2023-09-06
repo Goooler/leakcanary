@@ -1,8 +1,9 @@
 package shark
 
 import okio.BufferedSource
-import okio.Okio
 import java.io.File
+import okio.buffer
+import okio.source
 
 /**
  * Represents the header metadata of a Hprof file.
@@ -37,7 +38,7 @@ data class HprofHeader(
       if (fileLength == 0L) {
         throw IllegalArgumentException("Hprof file is 0 byte length")
       }
-      return Okio.buffer(Okio.source(hprofFile.inputStream())).use {
+      return hprofFile.inputStream().source().buffer().use {
         parseHeaderOf(it)
       }
     }

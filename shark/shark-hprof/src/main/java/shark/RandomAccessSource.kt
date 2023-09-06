@@ -2,11 +2,11 @@ package shark
 
 import okio.Buffer
 import okio.BufferedSource
-import okio.Okio
 import okio.Source
 import okio.Timeout
 import java.io.Closeable
 import java.io.IOException
+import okio.buffer
 
 interface RandomAccessSource : Closeable {
   @Throws(IOException::class)
@@ -17,7 +17,7 @@ interface RandomAccessSource : Closeable {
   ): Long
 
   fun asStreamingSource(): BufferedSource {
-    return Okio.buffer(object : Source {
+    return object : Source {
       var position = 0L
 
       override fun timeout() = Timeout.NONE
@@ -40,6 +40,6 @@ interface RandomAccessSource : Closeable {
         position += bytesRead
         return bytesRead
       }
-    })
+    }.buffer()
   }
 }
