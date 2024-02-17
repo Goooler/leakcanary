@@ -31,7 +31,7 @@ gradlePlugin-dokka = { module = "org.jetbrains.dokka:dokka-gradle-plugin", versi
 gradlePlugin-binaryCompatibility = { module = "org.jetbrains.kotlinx:binary-compatibility-validator", version = "0.13.2" }
 gradlePlugin-mavenPublish = { module = "com.vanniktech:gradle-maven-publish-plugin", version = "0.27.0" }
 gradlePlugin-detekt = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version = "1.6.0" }
-gradlePlugin-keeper = { module = "com.slack.keeper:keeper", version = "0.7.0" }
+gradlePlugin-keeper = { module = "com.slack.keeper:keeper", version = "0.15.0" }
 gradlePlugin-sqldelight = { module = "app.cash.sqldelight:gradle-plugin", version.ref = "sqldelight" }
 gradlePlugin-hilt = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
 
