@@ -22,7 +22,7 @@ androidXJunit = "1.1.5"
 workManager = "2.9.0"
 composeCompiler = "1.5.4"
 hilt = "2.50"
-sqldelight = "2.0.0"
+sqldelight = "2.0.1"
 
 [libraries]
 gradlePlugin-android = { module = "com.android.tools.build:gradle", version = "8.2.2" }
